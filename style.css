@@ -1,0 +1,33 @@
+body  {
+    text-align: center;
+    background-color: whitesmoke;
+}
+
+.loginButton {
+    margin: 5px;
+}
+
+#display_div {
+    display: none;
+}
+
+#login_div{
+    display: none;
+}
+
+ul {
+    list-style-type: none;
+}
+
+#apps {
+    padding: 15px 5px;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    margin-left: 25vw;
+    margin-right: 25vw;
+    color: blanchedalmond;
+}
+
+.download {
+    padding: 2px;
+}
