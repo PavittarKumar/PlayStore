@@ -112,9 +112,11 @@ function onDownload(DeveloperID, age, gender, appName) {
         }
         else {
             console.log("No App found");
+            alert("App: No App found");
         }
     }).catch((error) => {
         console.log("Error in fetching app data");
+        alert(error);
     });
 
     var newNotify;
@@ -133,8 +135,10 @@ function onDownload(DeveloperID, age, gender, appName) {
         } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");
+            alert("Notification: No such document!");
         }
     }).catch((error) => {
         console.log("Error getting document:", error);
+        alert(error);
     });
 }
