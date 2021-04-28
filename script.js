@@ -47,8 +47,8 @@ firebase.auth().onAuthStateChanged((user) => {
                 for(var i = 0; i < documents.length; i++) {
                     var DeveloperID = documents[i]["Developer ID"];
                     var displayApp = `
-                    <li>${documents[i].appName} with ${documents[i].Downloads} downloads</li>
-                    <br>
+                    <li>${documents[i].appName}: ${documents[i].Downloads} downloads</li>
+                    
                     <button class="download" onclick="onDownload('${DeveloperID}', '${age}', '${gender}', '${documents[i].appName}')"> Download </button>
                     `;
                     document.getElementById(`apps`).insertAdjacentHTML("beforeend", displayApp);
