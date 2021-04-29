@@ -1,4 +1,5 @@
 var db = firebase.firestore();
+var email, age, gender, uid, userApps;
 
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -9,11 +10,12 @@ firebase.auth().onAuthStateChanged((user) => {
         document.getElementById("display_div").style.display = "block";
 
         var user = firebase.auth().currentUser;
-        var name, email, age, gender;
+       
 
         if(user != null) {
             email = user.email;
-            name = user.displayName;
+            uid = user.uid;
+            
             document.getElementById("welcome").innerHTML =`Welcome ${email}`;     
 
             var docRef = db.collection("User UID").doc(user.uid);
@@ -23,28 +25,32 @@ firebase.auth().onAuthStateChanged((user) => {
                     // console.log("Document data:", doc.data());
                     age = doc.data().Age;
                     gender = doc.data().Gender;
+                    userApps = doc.data().Apps;
+                    //Listing all Notification
                     for(var i = doc.data().Notification.length - 1; i >= 0; i--) {
                         var message = doc.data().Notification[i];
                         displayHtml = `<li>${message}</l1>`;
                         document.getElementById(`Notify`).insertAdjacentHTML("beforeend",displayHtml);
                     }
-                    for(var i = 0; i < doc.data().Apps.length; i++) {
+                    // Listing user apps
+                    for(var i = doc.data().Apps.length - 1; i >= 0; i--) {
                         var myApp = `<li>${doc.data().Apps[i]}</li>`;
                         document.getElementById(`yourApps`).insertAdjacentHTML("beforeend",myApp);
                     }
 
                 } else {
                     // doc.data() will be undefined in this case
-                    document.getElementById(`Notify`).insertAdjacentHTML("beforeend","No Notification");
+                    console.log("Document Don't exist");
                 }
             }).catch((error) => {
                 console.log("Error getting document:", error);
             });
 
+            // Listing all of the apps on backend
             db.collection("Apps").get().then(querySnapshot => {
                 const documents = querySnapshot.docs.map(doc => doc.data())
                 // do something with documents
-                for(var i = 0; i < documents.length; i++) {
+                for(var i = documents.length - 1; i >= 0; i--) {
                     var DeveloperID = documents[i]["Developer ID"];
                     var displayApp = `
                     <li>${documents[i].appName}: ${documents[i].Downloads} downloads</li>
@@ -69,7 +75,7 @@ firebase.auth().onAuthStateChanged((user) => {
     }
   });
 
-
+//login
 function login() {
     var userEmail = document.getElementById("email-field").value;
     var userPass = document.getElementById("password-field").value;
@@ -87,17 +93,23 @@ function login() {
     });
 }
 
+// logout
 function logout() {
-    document.getElementById(`Notify`).innerHTML = "";
-    document.getElementById(`apps`).innerHTML = "";
-    document.getElementById('yourApps').innerHTML = "";
     firebase.auth().signOut().then(() => {
         // Sign-out successful.
+        document.getElementById(`Notify`).innerHTML = "";
+        document.getElementById(`apps`).innerHTML = "";
+        document.getElementById('yourApps').innerHTML = "";
+        email = undefined;
+        age = undefined;
+        uid = undefined;
+        userApps = undefined;
       }).catch((error) => {
         // An error happened.
       });
 }
 
+//When click on donwload button
 function onDownload(DeveloperID, age, gender, appName) {
     var docRef = db.collection("User UID").doc(DeveloperID);
     var appRef =  db.collection("Apps").doc(appName);
@@ -119,6 +131,7 @@ function onDownload(DeveloperID, age, gender, appName) {
         alert(error);
     });
 
+    // Sending the notification 
     var newNotify;
     docRef.get().then((doc) => {
         if (doc.data()) {
@@ -141,4 +154,79 @@ function onDownload(DeveloperID, age, gender, appName) {
         console.log("Error getting document:", error);
         alert(error);
     });
+}
+
+// Adding Apps
+
+function addApp() {
+    var newAppName = document.getElementById("newAppInput").value;
+    
+    //Adding app in App collection
+    db.collection("Apps").doc(newAppName).set({
+        "Developer ID": uid,
+        Downloads: 0,
+        appName: newAppName,
+    })
+    .then(() => {
+        alert("App Added Succesfully in your apps");
+        console.log("Document successfully written!");
+    })
+    .catch((error) => {
+        alert(error);
+        console.error("Error writing document: ", error);
+    });
+    
+    // Adding app in User UID collection
+    userApps.push(newAppName);
+    db.collection("User UID").doc(uid).set({
+        Apps: userApps,
+    }, {merge: true})
+    .then(() => {
+        alert("App Posted Succesfully");
+    })
+    .catch((error) => {
+        alert(error);
+    });
+
+}
+
+// SignUp new user
+
+function signUp() {
+    var newUserEmail = document.getElementById("newUserEmail").value;
+    var newUserPass = document.getElementById("newUserPass").value;
+    var newUserGender = document.getElementById("newUserGender").value;
+    var newUserAge = document.getElementById("newUserAge").value;
+    console.log(newUserAge, newUserEmail, newUserGender, newUserPass);
+
+    firebase.auth().createUserWithEmailAndPassword(newUserEmail, newUserPass)
+    .then((userCredential) => {
+        // Signed in 
+        var user = userCredential.user;
+        
+        db.collection("User UID").doc(user.uid).set({
+            Age: newUserAge,
+            Apps: [],
+            Gender: newUserGender,
+            Notification: [],
+        })
+        .then(() => {
+            alert("Account Created Successfully");
+            logout();
+        })
+        .catch((error) => {
+            alert(error);
+        });
+
+        // ...
+    })
+    .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(error);
+        // ..
+    });
+
+
+
 }

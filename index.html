@@ -4,18 +4,36 @@
     <title>Play Store</title>
 </head>
 <body>
+    <!-- login -->
     <div id="login_div">
         <h1 class="heading">Welcome to Play store</h1>
-        <p>Login ID</p>
-        <input type="text" id="email-field">
-        <p>Password</p>
-        <input type="password" id="password-field"><br>
+        <h2>Log In</h2>
+        Login ID
+        <input type="email" id="email-field">
+        Password
+        <input type="password" id="password-field">
         <button class="loginButton" onclick="login()">Login</button>
+        <br>
+        <!-- SignUp -->
+        <div id="SignUp">
+            <h2 class="SignUp">Sign Up</h2>
+            Enter Email <br>
+            <input class="SignUp" type="email" id="newUserEmail"><br>
+            Enter Password <br>
+            <input class="SignUp" type="password" id="newUserPass"><br>
+            Enter Gender <br>
+            <input class="SignUp" type="text" id="newUserGender"><br>
+            Enter Age <br>
+            <input class="SignUp" type="number" id="newUserAge"><br>
+            <button class="SignUp" onclick="signUp()">Sign Up</button>
+        </div>
+        
     </div>
 
     <div id="display_div">
-        <h1 id="welcome">Welcome</h1><br>
+        <h1 id="welcome">Welcome</h1>
         <button class="loginButton" onclick="logout()">Logout</button>  
+        <h3>Notifications</h3>
         <ul id="Notify">
 
         </ul>
@@ -24,6 +42,11 @@
 
         </div>
         <h3>Your Apps</h4>
+        <div id="addApps">
+            <input type="text" id="newAppInput">
+            <button onclick="addApp()">Upload</button>
+        </div>
+        
         <div id="yourApps">
 
         </div>

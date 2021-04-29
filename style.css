@@ -30,6 +30,8 @@ li {
     margin-left: 25vw;
     margin-right: 25vw;
     color: rgb(255, 255, 255);
+    height: 20vh;
+    overflow: scroll;
 }
 
 #yourApps{
@@ -39,8 +41,28 @@ li {
     margin-left: 25vw;
     margin-right: 25vw;
     color: rgb(255, 255, 255);
+    height: 10vh;
+    overflow: scroll;
 }
 
 .download {
     margin: 5px;
+}
+
+#addApps {
+    margin: 5px;
+}
+
+#Notify {
+    height: 10vh;
+    overflow: scroll;
+}
+
+#SignUp {
+    display: block;
+    margin: auto 0;
+}
+
+.SignUp {
+    margin: 5px
 }
