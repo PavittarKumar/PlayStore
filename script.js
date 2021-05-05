@@ -10,7 +10,10 @@ firebase.auth().onAuthStateChanged((user) => {
         document.getElementById("display_div").style.display = "block";
 
         var user = firebase.auth().currentUser;
-       
+        // login event
+        gtag('event', 'login', {
+            method: 'Google'
+        });
 
         if(user != null) {
             email = user.email;
