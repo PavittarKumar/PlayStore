@@ -235,8 +235,9 @@ function signUp() {
 }
 
 //Login with google
-var provider = new firebase.auth.GoogleAuthProvider();
+
 function googleLogin() {
+    var provider = new firebase.auth.GoogleAuthProvider();
     console.log("clicked");
     firebase.auth()
     .signInWithPopup(provider)
