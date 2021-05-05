@@ -6,14 +6,19 @@
 <body>
     <!-- login -->
     <div id="login_div">
-        <h1 class="heading">Welcome to Play store</h1>
-        <h2>Log In</h2>
-        Login ID
-        <input type="email" id="email-field">
-        Password
-        <input type="password" id="password-field">
-        <button class="loginButton" onclick="login()">Login</button>
-        <br>
+        <div id="loginArea">
+            <h1 class="heading">Welcome to Play store</h1>
+            <h2>Log In</h2>
+            Login ID
+            <input type="email" id="email-field">
+            Password
+            <input type="password" id="password-field">
+            <button class="loginButton" onclick="login()">Login</button> <br>
+            <h1>OR</h1>
+            <button class="loginButton" onclick="googleLogin()">Google Login</button>
+            <br>
+        </div>
+        
         <!-- SignUp -->
         <div id="SignUp">
             <h2 class="SignUp">Sign Up</h2>
@@ -31,6 +36,13 @@
     </div>
 
     <div id="display_div">
+        <div id="essentials">
+            Enter Gender
+            <input type="text">
+            Enter Age
+            <input type="number">
+            <button class="loginButton" onclick="updateGenderAndAge()">Update</button>
+        </div>
         <h1 id="welcome">Welcome</h1>
         <button class="loginButton" onclick="logout()">Logout</button>  
         <h3>Notifications</h3>

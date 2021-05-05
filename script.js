@@ -28,6 +28,9 @@ firebase.auth().onAuthStateChanged((user) => {
                     // console.log("Document data:", doc.data());
                     age = doc.data().Age;
                     gender = doc.data().Gender;
+                     //Check if gender and age is there
+                    checkGenderAndAge();
+
                     userApps = doc.data().Apps;
                     //Listing all Notification
                     for(var i = doc.data().Notification.length - 1; i >= 0; i--) {
@@ -229,4 +232,89 @@ function signUp() {
         console.log(error);
         // ..
     });
+}
+
+//Login with google
+var provider = new firebase.auth.GoogleAuthProvider();
+function googleLogin() {
+    firebase.auth()
+    .signInWithPopup(provider)
+    .then((result) => {
+        /** @type {firebase.auth.OAuthCredential} */
+        var credential = result.credential;
+
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = credential.accessToken;
+        // The signed-in user info.
+        var user = result.user;
+
+        var userRef = db.collection("User UID").doc(user.uid);
+
+        userRef.get()
+        .then((doc) => {
+            if(!doc.exists) {
+                userRef.set({
+                    Age: -1,
+                    Apps: [],
+                    Gender: "None",
+                    Notification: [],
+                })
+                .then(() => {
+                    alert("Account Created Successfully");
+                    logout();
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+            }
+        })
+
+        // ...
+    }).catch((error) => {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        // ...
+  });
+
+}
+
+//Check gender and age
+
+function checkGenderAndAge() { //No need to pass arguments as gender and age are already global variables
+    if(gender == "None" && age == -1) {
+        document.getElementById("essentials").style.display = "block";
+        return false;
+    } else {
+        document.getElementById("essentials").style.display = "none";
+        return true;
+    }
+}
+
+//Update gender and age
+
+function updateGenderAndAge() {
+
+    var genderAndAge = document.getElementById('essentials').getElementsByTagName('input');
+    console.log(genderAndAge[0].value, genderAndAge[1].value);
+    if((genderAndAge[0].value == `Male` || genderAndAge[0].value == `Female`) && genderAndAge[1].value > 6 ) {
+        db.collection("User UID").doc(uid).set({
+            Age: genderAndAge[1].value,
+            Gender: genderAndAge[0].value,
+        }, {merge: true})
+        .then(() => {
+            alert("Updated succesfully");
+            
+        })
+        .catch((error) => {
+            alert(error);
+        });
+    } else {
+        alert("Please Enter the valid Gender(Male or Female) or Age!\nAge > 6");
+    }
+
 }

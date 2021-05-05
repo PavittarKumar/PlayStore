@@ -66,3 +66,12 @@ li {
 .SignUp {
     margin: 5px
 }
+
+#loginArea {
+    padding: 1rem;
+    border: solid black;
+}
+
+#essentials {
+    display: none;
+}
