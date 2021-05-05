@@ -214,6 +214,10 @@ function signUp() {
     var newUserGender = document.getElementById("newUserGender").value;
     var newUserAge = document.getElementById("newUserAge").value;
     // console.log(newUserAge, newUserEmail, newUserGender, newUserPass);
+    if(!((newUserGender == "Male" || newUserGender == "Female") && newUserAge > 6)) {
+        alert("Please Enter the valid Gender(Male or Female) or Age!\nAge > 6");
+        return;
+    }
 
     firebase.auth().createUserWithEmailAndPassword(newUserEmail, newUserPass)
     .then((userCredential) => {
