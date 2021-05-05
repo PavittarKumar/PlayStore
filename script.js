@@ -197,7 +197,7 @@ function signUp() {
     var newUserPass = document.getElementById("newUserPass").value;
     var newUserGender = document.getElementById("newUserGender").value;
     var newUserAge = document.getElementById("newUserAge").value;
-    console.log(newUserAge, newUserEmail, newUserGender, newUserPass);
+    // console.log(newUserAge, newUserEmail, newUserGender, newUserPass);
 
     firebase.auth().createUserWithEmailAndPassword(newUserEmail, newUserPass)
     .then((userCredential) => {
@@ -226,7 +226,4 @@ function signUp() {
         console.log(error);
         // ..
     });
-
-
-
 }
