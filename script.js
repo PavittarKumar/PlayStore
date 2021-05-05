@@ -237,6 +237,7 @@ function signUp() {
 //Login with google
 var provider = new firebase.auth.GoogleAuthProvider();
 function googleLogin() {
+    console.log("clicked");
     firebase.auth()
     .signInWithPopup(provider)
     .then((result) => {
@@ -247,6 +248,7 @@ function googleLogin() {
         var token = credential.accessToken;
         // The signed-in user info.
         var user = result.user;
+        console.log("opened");
 
         var userRef = db.collection("User UID").doc(user.uid);
 
