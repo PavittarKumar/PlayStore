@@ -117,6 +117,12 @@ function logout() {
 
 //When click on donwload button
 function onDownload(DeveloperID, age, gender, appName) {
+
+    if(!checkGenderAndAge()) {
+        alert("Please fill the gender and age first");
+        return;
+    }
+
     var docRef = db.collection("User UID").doc(DeveloperID);
     var appRef =  db.collection("Apps").doc(appName);
 
@@ -165,6 +171,10 @@ function onDownload(DeveloperID, age, gender, appName) {
 // Adding Apps
 
 function addApp() {
+    if(!checkGenderAndAge()) {
+        alert("Please fill the gender and age first");
+        return;
+    }
     var newAppName = document.getElementById("newAppInput").value;
     
     //Adding app in App collection
@@ -312,7 +322,7 @@ function updateGenderAndAge() {
         }, {merge: true})
         .then(() => {
             alert("Updated succesfully");
-            
+            window.location.reload();
         })
         .catch((error) => {
             alert(error);
