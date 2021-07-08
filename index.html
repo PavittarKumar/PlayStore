@@ -6,8 +6,8 @@
 <body>
     <!-- login -->
     <div id="login_div">
+        <h1 class="heading">Welcome to Play store</h1>
         <div id="loginArea">
-            <h1 class="heading">Welcome to Play store</h1>
             <h2>Log In</h2>
             Login ID
             <input type="email" id="email-field">
@@ -43,25 +43,33 @@
             <input type="number">
             <button class="loginButton" onclick="updateGenderAndAge()">Update</button>
         </div>
-        <h1 id="welcome">Welcome</h1>
-        <button class="loginButton" onclick="logout()">Logout</button>  
-        <h3>Notifications</h3>
-        <ul id="Notify">
+        <h2 id="welcome">Welcome</h2>
+        <button class="loginButton" onclick="logout()">Logout</button>
+        <div class="flexContainer">
+            <div>
+                <h3 style="color: aliceblue;">Notifications</h3>
+                <ul id="Notify">
 
-        </ul>
-        <h3>All Apps</h4>
-        <div id="apps">
+                </ul>
+            </div>  
+            <div>
+                <h3>All Apps</h4>
+                <div id="apps">
 
-        </div>
-        <h3>Your Apps</h4>
-        <div id="addApps">
-            <input type="text" id="newAppInput">
-            <button onclick="addApp()">Upload</button>
+                </div>
+                <h3>Your Apps</h4>
+                <div id="addApps">
+                    <input type="text" id="newAppInput">
+                    <button class="uploadButton" onclick="addApp()">Upload</button>
+                </div>
+                
+                <div id="yourApps">
+
+                </div>
+            </div>
         </div>
         
-        <div id="yourApps">
-
-        </div>
+        
            
     </div>
     

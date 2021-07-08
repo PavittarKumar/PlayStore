@@ -19,7 +19,7 @@ firebase.auth().onAuthStateChanged((user) => {
             email = user.email;
             uid = user.uid;
             
-            document.getElementById("welcome").innerHTML =`Welcome ${email}`;     
+            document.getElementById("welcome").innerHTML =`Welcome to App Store ${email}`;     
 
             var docRef = db.collection("User UID").doc(user.uid);
             // console.log(docRef.data());
@@ -35,7 +35,7 @@ firebase.auth().onAuthStateChanged((user) => {
                     //Listing all Notification
                     for(var i = doc.data().Notification.length - 1; i >= 0; i--) {
                         var message = doc.data().Notification[i];
-                        displayHtml = `<li>${message}</l1>`;
+                        displayHtml = `<li class="notificationMessage">${message}</l1>`;
                         document.getElementById(`Notify`).insertAdjacentHTML("beforeend",displayHtml);
                     }
                     // Listing user apps
@@ -61,7 +61,7 @@ firebase.auth().onAuthStateChanged((user) => {
                     var displayApp = `
                     <li>${documents[i].appName}: ${documents[i].Downloads} downloads</li>
                     
-                    <button class="download" onclick="onDownload('${DeveloperID}', '${age}', '${gender}', '${documents[i].appName}')"> Download </button>
+                    <button class="download" onclick="onDownload('${DeveloperID}', '${age}', '${gender}', '${documents[i].appName}')"> Download ↓ </button>
                     `;
                     document.getElementById(`apps`).insertAdjacentHTML("beforeend", displayApp);
                 }
